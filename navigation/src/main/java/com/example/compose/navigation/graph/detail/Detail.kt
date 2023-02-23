@@ -26,7 +26,7 @@ fun NavGraphBuilder.detail(navController: NavController) {
         composable(route = Destinations.DetailGraph.ContactScreen().route) { entry ->
             val data =
                 entry.parcelableData<InitialContactData>(Destinations.DetailGraph.ContactScreen().contactData)
-            ContactScreen(data)
+            ContactScreen(data = data, navigator = ContactNavigatorImpl(navController))
         }
     }
 }

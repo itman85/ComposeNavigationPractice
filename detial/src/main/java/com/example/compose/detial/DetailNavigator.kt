@@ -4,4 +4,5 @@ import com.example.compose.contact.InitialContactData
 
 interface DetailNavigator {
     fun navigateToContact(data:InitialContactData)
+    fun navigateBack()
 }

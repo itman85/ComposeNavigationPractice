@@ -15,4 +15,8 @@ class DetailNavigatorImpl(private val navController: NavController): DetailNavig
             args = bundleOf(Destinations.DetailGraph.ContactScreen().contactData to data)
         )
     }
+
+    override fun navigateBack() {
+        navController.navigateUp()
+    }
 }
