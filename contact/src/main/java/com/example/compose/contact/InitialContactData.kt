@@ -1,3 +1,7 @@
 package com.example.compose.contact
 
-data class InitialContactData(val title:String)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class InitialContactData(val title:String) : Parcelable
