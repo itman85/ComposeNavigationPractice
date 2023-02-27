@@ -57,6 +57,7 @@ class MainActivity : ComponentActivity() {
                 ) { paddingValues ->
                     AppNavHost(
                         navController = navController,
+                        activity = this,
                         modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
                     )
                 }
@@ -66,14 +67,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController, modifier: Modifier) {
+fun AppNavHost(navController: NavHostController, activity: MainActivity, modifier: Modifier) {
 
     NavHost(
         navController = navController,
         startDestination = Destinations.ResultListScreen.route,
         modifier = modifier
     ) {
-        resultList(navController)
+        resultList(navController, activity)
         favorite(navController)
         detail(navController)
     }

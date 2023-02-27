@@ -19,3 +19,5 @@ include ':detial'
 include ':favorite'
 include ':contact'
 include ':navigation'
+
+include ':testdeeplinkapp'

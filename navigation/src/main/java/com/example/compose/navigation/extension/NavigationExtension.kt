@@ -8,12 +8,13 @@ import androidx.core.net.toUri
 import androidx.navigation.*
 
 fun NavController.navigateTo(
-    route:String,
-    args: Bundle,
+    route: String,
+    args: Bundle? = null,
     navOptions: NavOptions? = null,
     navigatorExtras: Navigator.Extras? = null
-){
-    val routeLink = NavDeepLinkRequest.Builder.fromUri(NavDestination.createRoute(route).toUri()).build()
+) {
+    val routeLink =
+        NavDeepLinkRequest.Builder.fromUri(NavDestination.createRoute(route).toUri()).build()
     val deepLinkMatch = graph.matchDeepLink(routeLink)
     if (deepLinkMatch != null) {
         val destination = deepLinkMatch.destination
@@ -24,6 +25,10 @@ fun NavController.navigateTo(
         navigate(route, navOptions, navigatorExtras)
     }
 
+}
+
+fun NavBackStackEntry.isCurrentDestinationRoute(navController: NavController): Boolean {
+    return navController.currentDestination?.route == this.destination.route
 }
 
 fun <T> NavBackStackEntry.parcelableData(key: String): T? {

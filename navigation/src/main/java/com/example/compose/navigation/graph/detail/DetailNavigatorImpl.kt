@@ -7,8 +7,7 @@ import com.example.compose.detial.DetailNavigator
 import com.example.compose.navigation.Destinations
 import com.example.compose.navigation.extension.navigateTo
 
-// todo DI?
-class DetailNavigatorImpl(private val navController: NavController): DetailNavigator {
+class DetailNavigatorImpl(private val navController: NavController) : DetailNavigator {
     override fun navigateToContact(data: InitialContactData) {
         navController.navigateTo(
             route = Destinations.DetailGraph.ContactScreen().route,
@@ -18,5 +17,11 @@ class DetailNavigatorImpl(private val navController: NavController): DetailNavig
 
     override fun navigateBack() {
         navController.navigateUp()
+    }
+
+    override fun navigateBackFromDeeplink() {
+        // when click back detail screen opened from deeplink, it should remove detail screen from back stack and open result list screen
+        navController.popBackStack()
+        navController.navigateTo(route = Destinations.ResultListScreen.route)
     }
 }

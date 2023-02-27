@@ -4,4 +4,6 @@ import com.example.compose.detial.InitialDetailData
 
 interface ResultListNavigator {
     fun navigateToDetail(data:InitialDetailData)
+
+    fun navigateBack()
 }

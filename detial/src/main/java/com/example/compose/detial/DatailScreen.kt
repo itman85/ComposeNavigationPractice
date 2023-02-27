@@ -2,6 +2,9 @@ package com.example.compose.detial
 
 import android.os.CountDownTimer
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -18,6 +21,18 @@ import androidx.lifecycle.LifecycleEventObserver
 import com.example.compose.contact.InitialContactData
 
 @Composable
+fun DetailScreenDeepLinkRoute(itemId: String?, navigator: DetailNavigator) {
+    DetailScreen(
+        data = InitialDetailData(
+            "Open from deeplink Item ${itemId ?: "No Id"}",
+            "No content from deeplink",
+            true
+        ),
+        navigator = navigator
+    )
+}
+
+@Composable
 fun DetailScreen(data: InitialDetailData?, navigator: DetailNavigator) {
 
     var count by rememberSaveable {
@@ -32,13 +47,19 @@ fun DetailScreen(data: InitialDetailData?, navigator: DetailNavigator) {
             Log.d("Phan", "Detail Screen disposed")
         }
     }
+    val onBack = {
+        if (data?.isFromDeeplink == true) navigator.navigateBackFromDeeplink() else navigator.navigateBack()
+    }
+    BackPressHandler {
+        onBack()
+    }
 
     Scaffold(topBar = {
         TopAppBar(
             title = { Text(text = "Detail Screen") },
             backgroundColor = Color.Gray,
             navigationIcon = {
-                IconButton(onClick = { navigator.navigateBack() }) {
+                IconButton(onClick = { onBack() }) {
                     Icon(Icons.Default.ArrowBack, contentDescription = "detail back")
                 }
             }
@@ -118,6 +139,32 @@ fun CountdownComponent() {
         onDispose {
             countDownTimer.cancel() // cancel as this composable disposed
             lifecycle.removeObserver(observer)
+        }
+    }
+}
+
+// this composable will be reused many places, should move to common module
+@Composable
+fun BackPressHandler(
+    backPressedDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+        }
+    }
+
+    DisposableEffect(key1 = backPressedDispatcher) {
+        backPressedDispatcher?.addCallback(backCallback)
+
+        onDispose {
+            backCallback.remove()
         }
     }
 }
