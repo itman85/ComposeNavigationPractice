@@ -21,3 +21,4 @@ include ':contact'
 include ':navigation'
 
 include ':testdeeplinkapp'
+include ':base'

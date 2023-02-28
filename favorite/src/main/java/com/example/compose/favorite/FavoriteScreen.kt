@@ -6,30 +6,51 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.compose.base.BottomNavigationBar
+import com.example.compose.base.ItemType
 
 @Composable
 fun FavoriteScreen(navigator: FavoriteNavigator) {
     val itemsList = createFavoriteDataList()
-    LazyColumn {
-        items(items = itemsList){ item ->
-            Row (modifier = Modifier.fillMaxSize().padding(8.dp)
-                .clickable {
-                    navigator.navigateToDetail(item.mapToDetail())
-                }){
-                Text(text = item.title)
-                Text(text = item.content)
-                Text(text = item.favoriteNote)
+    Scaffold(bottomBar = {
+        BottomNavigationBar(currentItemType = ItemType.FAVORITE) {
+            if (it.itemType != ItemType.FAVORITE)
+                navigator.navigateToItemBar(it.itemType)
+        }
+    }, backgroundColor = Color.White) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+        ) {
+            items(items = itemsList) { item ->
+                Row(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
+                    .clickable {
+                        navigator.navigateToDetail(item.mapToDetail())
+                    }) {
+                    Text(text = item.title)
+                    Text(text = item.content)
+                    Text(text = item.favoriteNote)
+                }
             }
         }
     }
 }
 
-private fun createFavoriteDataList():List<FavoriteData>{
+private fun createFavoriteDataList(): List<FavoriteData> {
     return (0..5).map {
-        FavoriteData(title = "title ${it+1}", content = "Content for item ${it+1}", favoriteNote = "Note for item ${it+1}")
+        FavoriteData(
+            title = "title ${it + 1}",
+            content = "Content for item ${it + 1}",
+            favoriteNote = "Note for item ${it + 1}"
+        )
     }
 }

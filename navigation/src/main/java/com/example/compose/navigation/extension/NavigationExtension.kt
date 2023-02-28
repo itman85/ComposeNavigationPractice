@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.core.net.toUri
 import androidx.navigation.*
+import com.example.compose.navigation.R
 
 fun NavController.navigateTo(
     route: String,
@@ -16,6 +17,12 @@ fun NavController.navigateTo(
     val routeLink =
         NavDeepLinkRequest.Builder.fromUri(NavDestination.createRoute(route).toUri()).build()
     val deepLinkMatch = graph.matchDeepLink(routeLink)
+    /*val customNavOptions = navOptions ?: NavOptions.Builder()
+        .setEnterAnim(R.anim.slide_in_right)
+        .setExitAnim(R.anim.slide_out_left)
+        .setPopEnterAnim(R.anim.slide_in_left)
+        .setPopExitAnim(R.anim.slide_out_right)
+        .build()*/
     if (deepLinkMatch != null) {
         val destination = deepLinkMatch.destination
         val id = destination.id

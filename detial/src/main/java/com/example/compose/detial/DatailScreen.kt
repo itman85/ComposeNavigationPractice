@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -64,11 +66,13 @@ fun DetailScreen(data: InitialDetailData?, navigator: DetailNavigator) {
                 }
             }
         )
-    }) { paddingValues ->
+    }, backgroundColor = Color.Cyan) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
+                .fillMaxSize()
+
         ) {
             Text(data?.title ?: "No data")
             Text(data?.content ?: "No data")
@@ -86,7 +90,6 @@ fun DetailScreen(data: InitialDetailData?, navigator: DetailNavigator) {
             }
         }
     }
-
 }
 
 @Composable

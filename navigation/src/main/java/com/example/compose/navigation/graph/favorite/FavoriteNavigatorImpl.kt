@@ -2,6 +2,7 @@ package com.example.compose.navigation.graph.favorite
 
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import com.example.compose.base.ItemType
 import com.example.compose.detial.InitialDetailData
 import com.example.compose.favorite.FavoriteNavigator
 import com.example.compose.navigation.Destinations
@@ -13,5 +14,12 @@ class FavoriteNavigatorImpl(private val navController: NavController): FavoriteN
             route = Destinations.DetailGraph.route,
             args = bundleOf(Destinations.DetailGraph.DetailScreen().detailData to data)
         )
+    }
+
+    override fun navigateToItemBar(itemType: ItemType) {
+        when(itemType){
+            ItemType.LIST -> navController.navigateTo(Destinations.ResultListScreen.route)
+            ItemType.FAVORITE -> navController.navigateTo(Destinations.FavoriteScreen.route)
+        }
     }
 }
