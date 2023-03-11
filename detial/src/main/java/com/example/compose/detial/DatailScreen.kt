@@ -84,6 +84,21 @@ fun DetailScreen(data: InitialDetailData?, navigator: DetailNavigator) {
             }) {
                 Text(text = "Open Contact")
             }
+            Button(onClick = {
+                navigator.navigateToSimilarItem(
+                    data?.let {
+                        it.copy(
+                            title = "Similar ${it.title}",
+                            content = "Similar ${it.content}"
+                        )
+                    } ?: InitialDetailData(
+                        title = "Similar no title",
+                        content = "Similar no content"
+                    )
+                )
+            }) {
+                Text(text = "Open Similar Item")
+            }
         }
     }
 

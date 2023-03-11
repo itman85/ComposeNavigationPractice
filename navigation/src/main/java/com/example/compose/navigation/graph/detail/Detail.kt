@@ -17,14 +17,14 @@ import com.example.compose.navigation.extension.parcelableData
 fun NavGraphBuilder.detail(navController: NavController) {
     navigation(
         route = Destinations.DetailGraph.route,
-        startDestination = Destinations.DetailGraph.DetailScreen().route
+        startDestination = Destinations.DetailGraph.DetailScreen.route
     ) {
         composable(
-            route = Destinations.DetailGraph.DetailScreen().route
+            route = Destinations.DetailGraph.DetailScreen.route
         ) { entry ->
             if (entry.isCurrentDestinationRoute(navController)) {
                 val data =
-                    entry.parcelableData<InitialDetailData>(Destinations.DetailGraph.DetailScreen().detailData)
+                    entry.parcelableData<InitialDetailData>(Destinations.DetailGraph.DetailScreen.detailDataKey)
                 DetailScreen(
                     data = data,
                     navigator = DetailNavigatorImpl(navController)
@@ -33,16 +33,16 @@ fun NavGraphBuilder.detail(navController: NavController) {
         }
 
         composable(
-            route = Destinations.DetailGraph.DetailScreenFromDeepLink().route,
+            route = Destinations.DetailGraph.DetailScreenFromDeepLink.route,
             deepLinks = listOf(navDeepLink {
                 // todo scheme and host of uri should get from build config
                 uriPattern =
-                    "myapp://myhost.com/detail/{${Destinations.DetailGraph.DetailScreenFromDeepLink().itemId}}"
+                    "myapp://myhost.com/detail/{${Destinations.DetailGraph.DetailScreenFromDeepLink.itemIdKey}}"
             })
         ) { entry ->
             if (entry.isCurrentDestinationRoute(navController)) {
                 val itemId =
-                    entry.arguments?.getString(Destinations.DetailGraph.DetailScreenFromDeepLink().itemId)
+                    entry.arguments?.getString(Destinations.DetailGraph.DetailScreenFromDeepLink.itemIdKey)
                 DetailScreenDeepLinkRoute(
                     itemId = itemId,
                     navigator = DetailNavigatorImpl(navController)
@@ -50,10 +50,10 @@ fun NavGraphBuilder.detail(navController: NavController) {
             }
         }
 
-        composable(route = Destinations.DetailGraph.ContactScreen().route) { entry ->
+        composable(route = Destinations.DetailGraph.ContactScreen.route) { entry ->
             if (entry.isCurrentDestinationRoute(navController)) {
                 val data =
-                    entry.parcelableData<InitialContactData>(Destinations.DetailGraph.ContactScreen().contactData)
+                    entry.parcelableData<InitialContactData>(Destinations.DetailGraph.ContactScreen.contactDataKey)
                 ContactScreen(data = data, navigator = ContactNavigatorImpl(navController))
             }
         }

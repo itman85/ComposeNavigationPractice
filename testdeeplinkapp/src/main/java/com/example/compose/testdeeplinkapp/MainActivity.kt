@@ -50,7 +50,7 @@ fun MainScreen() {
     ) {
         Text(text = "This is test deep link app")
         Button(onClick = {
-            val itemId = 5
+            val itemId = "3000045831"
             val deepIntent = Intent(
                 Intent.ACTION_VIEW,
                 "myapp://myhost.com/detail/$itemId".toUri()

@@ -1,13 +1,20 @@
 package com.example.compose.navigation
 
-sealed class Destinations(val route:String) {
-    object ResultListScreen: Destinations("resultList")
-    object FavoriteScreen: Destinations("favorite")
+sealed class Destinations(val route: String) {
+    object ResultListScreen : Destinations("resultList")
+    object FavoriteScreen : Destinations("favorite")
 
-    object DetailGraph: Destinations("detail_graph") {
-        data class DetailScreen(val detailData: String = "detailData") : Destinations("detail")
+    object DetailGraph : Destinations("detail_graph") {
+        object DetailScreen : Destinations("detail") {
+            const val detailDataKey = "detailData"
+        }
 
-        data class DetailScreenFromDeepLink(val itemId:String = "itemId") : Destinations("detailDeeplink")
-        data class ContactScreen(val contactData: String = "contactData") : Destinations("contact")
+        object DetailScreenFromDeepLink : Destinations("detailDeeplink") {
+            const val itemIdKey = "itemId"
+        }
+
+        object ContactScreen : Destinations("contact") {
+            const val contactDataKey = "contactData"
+        }
     }
 }

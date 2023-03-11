@@ -11,7 +11,7 @@ class FavoriteNavigatorImpl(private val navController: NavController): FavoriteN
     override fun navigateToDetail(data: InitialDetailData) {
         navController.navigateTo(
             route = Destinations.DetailGraph.route,
-            args = bundleOf(Destinations.DetailGraph.DetailScreen().detailData to data)
+            args = bundleOf(Destinations.DetailGraph.DetailScreen.detailDataKey to data)
         )
     }
 }

@@ -15,13 +15,14 @@ class ResultListNavigatorImpl(
     override fun navigateToDetail(data: InitialDetailData) {
         navController.navigateTo(
             route = Destinations.DetailGraph.route,
-            args = bundleOf(Destinations.DetailGraph.DetailScreen().detailData to data)
+            args = bundleOf(Destinations.DetailGraph.DetailScreen.detailDataKey to data)
         )
     }
 
     override fun navigateBack() {
+        navController.navigateUp()
         // when click back result list screen, it will exit app
-        activity.finishAffinity() // app will go to background
+       // activity.finishAffinity() // app will go to background
         //activity.finishAndRemoveTask() // app completely removed from background
     }
 }

@@ -6,4 +6,5 @@ interface DetailNavigator {
     fun navigateToContact(data: InitialContactData)
     fun navigateBack()
     fun navigateBackFromDeeplink()
+    fun navigateToSimilarItem(data: InitialDetailData)
 }
